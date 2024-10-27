@@ -1,7 +1,9 @@
-package com.eventfy.Cadastro_Eventfy.config;
+package com.eventfy.login.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +14,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -25,14 +28,19 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configura CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login", "/organizadores/**").permitAll() // Permite acesso a rota de login e organizadores
-                        .anyRequest().authenticated() // Autenticação para outras rotas
+                        .requestMatchers("/organizadores/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable()); // Desabilita CSRF para testes (reavalie para produção)
-
+                .csrf(csrf -> csrf.disable());
         return http.build();
+    }
+
+    // Para usar AuthenticationManager, você pode criar um bean separado.
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
 
     @Bean
@@ -48,4 +56,5 @@ public class SecurityConfiguration {
         return source;
     }
 }
+
 
