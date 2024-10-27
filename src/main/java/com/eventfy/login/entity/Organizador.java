@@ -10,31 +10,35 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "Organizador")
-
 public class Organizador {
 
     @Id
     @Column(name = "Id_Organizador")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_organizador;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organizador_seq")
+    @SequenceGenerator(name = "organizador_seq", sequenceName = "organizador_seq", allocationSize = 1)
+    private Long idOrganizador;
 
-    @Column(name = "Nome_Organizador")
-    private String nome_organizador;
+    @Column(name = "Nome_Organizador", nullable = false)
+    private String nomeOrganizador;
 
     @Lob
     @Column(name = "Foto_Organizador")
-    private Byte foto_organizador;
+    private byte[] fotoOrganizador;
 
-    @Column(name = "Email_Organizador")
-    private String email_organizador;
+    @Column(name = "Email_Organizador", unique = true, nullable = false)
+    private String emailOrganizador;
 
-    @Column(name = "Senha_Organizador")
-    private String senha_organizador;
+    @Column(name = "Senha_Organizador", nullable = false)
+    private String senhaOrganizador;
 
     @Column(name = "Contato_Organizador")
-    private String contato_organizador;
+    private String contatoOrganizador;
 
     @Column(name = "Data_Cadastro")
-    private LocalDateTime data_cadastro;
+    private LocalDateTime dataCadastro;
 
+    @PrePersist
+    protected void onCreate() {
+        this.dataCadastro = LocalDateTime.now();
+    }
 }
