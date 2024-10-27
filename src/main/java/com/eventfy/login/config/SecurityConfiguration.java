@@ -1,5 +1,7 @@
 package com.eventfy.login.config;
 
+import com.eventfy.login.service.OrganizadorService; // Importe sua classe de UserDetailsService
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +17,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    @Autowired
+    private OrganizadorService userDetailsService; // Injetando o UserDetailsService
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -37,11 +41,6 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    // Para usar AuthenticationManager, você pode criar um bean separado.
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class).build();
-    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -56,5 +55,3 @@ public class SecurityConfiguration {
         return source;
     }
 }
-
-
