@@ -7,6 +7,7 @@ import com.eventfy.login.repository.OrganizadorRepository;
 import com.eventfy.login.security.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class OrganizadorService {
     private JwtToken jwtToken;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder; // Para verificar a senha criptografada
+    private PasswordEncoder passwordEncoder; // Para verificar a senha criptografada
 
     public LoginResponseDTO autenticar(OrganizadorAuth organizadorAuth) {
         // Verifica se o organizador existe pelo email
