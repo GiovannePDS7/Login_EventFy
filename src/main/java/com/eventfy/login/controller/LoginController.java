@@ -6,10 +6,8 @@ import com.eventfy.login.entity.Organizador;
 import com.eventfy.login.security.JwtToken;
 import com.eventfy.login.service.OrganizadorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+    private AuthenticationManager authenticationManager; // Injetando o AuthenticationManager
 
     @Autowired
     private JwtToken jwtToken;
