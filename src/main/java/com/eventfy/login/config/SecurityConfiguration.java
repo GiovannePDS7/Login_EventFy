@@ -1,6 +1,7 @@
 package com.eventfy.login.config;
 
 import com.eventfy.login.security.JwtAuthenticationFilter;
+import com.eventfy.login.service.CustomUserDetailsService; // Importar sua implementação
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -30,7 +30,12 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+    public CustomUserDetailsService userDetailsService() {
+        return new CustomUserDetailsService(); // Registrar o UserDetailsService
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(CustomUserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -39,7 +44,7 @@ public class SecurityConfiguration {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager(); // Definição do AuthenticationManager
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
@@ -58,19 +63,19 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(); // Assegure-se de ter um construtor adequado
+        return new JwtAuthenticationFilter();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*")); // Revise para produção; considere origens específicas
-        config.addAllowedMethod("*"); // Permite todos os métodos HTTP
-        config.addAllowedHeader("*"); // Permite todos os cabeçalhos
-        config.setAllowCredentials(true); // Permite credenciais (e.g., cookies)
+        config.setAllowedOrigins(List.of("*"));
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // Aplica para todas as rotas
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 }
