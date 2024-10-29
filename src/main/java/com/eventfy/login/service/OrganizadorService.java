@@ -47,7 +47,7 @@ public class OrganizadorService {
         ));
 
         // Retornar os dados necessários
-        return new LoginesponseDTO(
+        return new LoginResponseDTO(
                 token,
                 organizador.getIdOrganizador(),
                 organizador.getNomeOrganizador(),

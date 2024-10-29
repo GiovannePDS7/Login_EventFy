@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    private AuthenticationManager authenticationManager; // Injetando o AuthenticationManager
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtToken jwtToken;
