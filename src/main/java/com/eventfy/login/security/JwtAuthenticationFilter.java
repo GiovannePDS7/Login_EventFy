@@ -62,25 +62,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        // Verifica se o cabeçalho Authorization possui o prefixo Bearer
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7); // Remove o prefixo "Bearer "
+            String token = authHeader.substring(7);
+            try {
+                if (validateToken(token)) {
+                    String username = getUsuarioAutenticado(token);
 
-            // Valida o token
-            if (validateToken(token)) {
-                String username = getUsuarioAutenticado(token); // Extrai o usuário autenticado
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(username, null, null);
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // Cria o token de autenticação do Spring Security
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(username, null, null);
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                // Define o contexto de segurança do Spring
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (Exception e) {
+                // Configura o código de status para não autorizado e exibe mensagem de erro
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Token inválido ou expirado");
+                return;
             }
         }
 
-        // Continua a cadeia de filtros
         filterChain.doFilter(request, response);
     }
+
 }

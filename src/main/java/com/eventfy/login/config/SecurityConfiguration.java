@@ -52,9 +52,10 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/organizadores/**").permitAll()
+                        .requestMatchers("/organizadores/**", "/login").permitAll() // Inclui o login como público
                         .anyRequest().authenticated()
                 )
+
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
