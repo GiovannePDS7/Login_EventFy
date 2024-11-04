@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/organizadores")
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
@@ -27,12 +27,7 @@ public class LoginController {
 
     @Autowired
     private OrganizadorService organizadorService;
-    @GetMapping("/verificar-email")
-    public ResponseEntity<?> verificarEmail(@RequestParam String email) {
 
-        boolean existe = organizadorService.emailJaCadastrado(email);
-        return ResponseEntity.ok().body(Collections.singletonMap("existe", existe));
-    }
 
     @PostMapping
     public LoginResponseDTO authenticate(@RequestBody OrganizadorAuth organizadorAuth) {
