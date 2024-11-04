@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/organizadores")
 public class LoginController {
 
     @Autowired
