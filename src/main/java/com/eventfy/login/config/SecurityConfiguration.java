@@ -52,7 +52,7 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/organizadores/**", "/login").permitAll()
+                        .requestMatchers("/organizadores/**", "/login/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
