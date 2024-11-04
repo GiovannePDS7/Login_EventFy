@@ -52,7 +52,7 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/organizadores/**", "/login").permitAll() // Inclui o login como público
+                        .requestMatchers("/organizadores/**", "/login").permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -70,7 +70,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*")); // Especifique a origem
+        config.setAllowedOrigins(List.of("https://event-fy.vercel.app")); // Especifique a origem
         config.addAllowedMethod("*"); // Permita todos os métodos
         config.addAllowedHeader("*"); // Permita todos os cabeçalhos
         config.setAllowCredentials(true); // Permita credenciais
@@ -79,5 +79,6 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 
 }
