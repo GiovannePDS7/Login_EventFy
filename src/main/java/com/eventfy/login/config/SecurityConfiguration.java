@@ -70,13 +70,14 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
-        config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
-        config.setAllowCredentials(true);
+        config.setAllowedOrigins(List.of("https://event-fy.vercel.app")); // Especifique a origem
+        config.addAllowedMethod("*"); // Permita todos os métodos
+        config.addAllowedHeader("*"); // Permita todos os cabeçalhos
+        config.setAllowCredentials(true); // Permita credenciais
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 }
