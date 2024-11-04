@@ -29,7 +29,7 @@ public class LoginController {
     private OrganizadorService organizadorService;
 
 
-    @PostMapping
+    @PostMapping("/authenticate")
     public LoginResponseDTO authenticate(@RequestBody OrganizadorAuth organizadorAuth) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
