@@ -29,7 +29,7 @@ public class LoginController {
     private OrganizadorService organizadorService;
 
 
-    @GetMapping("/authenticate")
+    @PostMapping("/authenticate")
     public LoginResponseDTO authenticate(@RequestBody OrganizadorAuth organizadorAuth) {
         LoginResponseDTO loginResponseDTO = organizadorService.autenticar(organizadorAuth);
         /*.getEmailOrganizador(),
@@ -42,7 +42,7 @@ public class LoginController {
                 .orElseThrow(() -> new RuntimeException("Organizador não encontrado."));
 
         // Gerar o token JWT
-        String jwt = jwtToken.gerar((UserDetails) organizadorAuth); //authenticate.getPrincipal()
+        String jwt = jwtToken.gerar((UserDetails) organizador); //authenticate.getPrincipal()
 
         // Retornar as informações do organizador juntamente com o token
         return new LoginResponseDTO(
