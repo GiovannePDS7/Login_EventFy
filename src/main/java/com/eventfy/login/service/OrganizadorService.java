@@ -19,6 +19,9 @@ public class OrganizadorService {
     @Autowired
     private OrganizadorRepository organizadorRepository;
 
+    public boolean emailJaCadastrado(String email) {
+        return organizadorRepository.findByEmailOrganizador(email).isPresent();
+    }
     @Autowired
     private JwtToken jwtToken;
 

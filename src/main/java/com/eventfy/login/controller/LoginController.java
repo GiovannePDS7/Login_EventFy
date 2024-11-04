@@ -27,13 +27,12 @@ public class LoginController {
 
     @Autowired
     private OrganizadorService organizadorService;
-//
-//    @GetMapping("/verificar-email")
-//    public ResponseEntity<?> verificarEmail(@RequestParam String email) {
-//
-//        boolean existe = organizadorService.emailJaCadastrado(email);
-//        return ResponseEntity.ok().body(Collections.singletonMap("existe", existe));
-//    }
+    @GetMapping("/verificar-email")
+    public ResponseEntity<?> verificarEmail(@RequestParam String email) {
+
+        boolean existe = organizadorService.emailJaCadastrado(email);
+        return ResponseEntity.ok().body(Collections.singletonMap("existe", existe));
+    }
 
     @PostMapping
     public LoginResponseDTO authenticate(@RequestBody OrganizadorAuth organizadorAuth) {
