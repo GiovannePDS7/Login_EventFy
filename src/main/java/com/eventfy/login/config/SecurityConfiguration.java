@@ -72,16 +72,15 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("https://event-fy.vercel.app")); // Especifique a origem
-        config.addAllowedMethod("*"); // Permita todos os métodos
-        config.addAllowedHeader("*"); // Permita todos os cabeçalhos
-        config.setAllowCredentials(true); // Permita credenciais
+        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
 
     public static void main(String[] args) {
         System.out.println(new BCryptPasswordEncoder().encode("12345"));

@@ -9,7 +9,7 @@ public class LoginResponseDTO {
     private String token;
     private Long id;
     private String nome;
-    private String email;
+    private String emailOrganizador;
     private String contato;
     private byte[] foto;
 }

@@ -5,10 +5,7 @@ import com.eventfy.login.dto.LoginResponseDTO;
 import com.eventfy.login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
@@ -18,8 +15,8 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginRequestDTO loginReques) {
-
+    public ResponseEntity<LoginResponseDTO> authenticate(@RequestParam String usuario, @RequestParam String senha){//@RequestBody LoginRequestDTO loginReques) {
+      LoginRequestDTO loginReques = new LoginRequestDTO(usuario, senha);
         LoginResponseDTO response = loginService.autenticar(loginReques);
 
         return ResponseEntity.ok(response);
