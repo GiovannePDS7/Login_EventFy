@@ -51,13 +51,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuração CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // Verifique se isso está correto
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/login/**")).permitAll() // Permitir acesso à rota de login
-                        .anyRequest().authenticated() // Requer autenticação para outras rotas
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/login/**")).permitAll()
+                        .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable()) // Desabilitar CSRF se necessário (para APIs REST)
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // Filtro JWT
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
