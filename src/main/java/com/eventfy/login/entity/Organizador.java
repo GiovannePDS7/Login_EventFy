@@ -40,4 +40,6 @@ public class Organizador {
     protected void onCreate() {
         this.dataCadastro = LocalDateTime.now();
     }
+
+
 }
